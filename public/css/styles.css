@@ -1,6 +1,276 @@
 /******* Change Box Model ***************/
+:root {
+  --bg: #ffffff;
+  --ink: #111827;
+  --muted: #4b5563;
+  --brand: #1f2937;
+  --accent: #0e7490;
+  --accent-strong: #0b5568;
+  --surface: #f3f4f6;
+  --radius: 1rem;
+  --container: 1100px;
+  --shadow: 0 6px 16px rgba(0, 0, 0, .14);
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, .08);
+}
+
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: cursive, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.55;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/********** Hero **********/
+.page-title {
+  margin: 1rem 0 .75rem;
+  font-size: xx-large;
+  font-weight: 800;
+}
+
+.hero-card {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.hero-img {
+  width: 100%;
+  height: auto;
+}
+
+.hero-overlay {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background: var(--accent);
+  color: #fff;
+  padding: 1rem;
+  border-radius: .75rem;
+  max-width: min(90%, 320px);
+  box-shadow: var(--shadow-soft);
+}
+
+.overlay-title {
+  margin: 0 0 .25rem;
+}
+
+.overlay-list {
+  margin: 0 0 .75rem 1rem;
+}
+
+.btn {
+  display: inline-block;
+  background: #1e3a8a;
+  color: #fff;
+  text-decoration: none;
+  padding: .6rem 1rem;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.btn:hover, .btn:focus {
+  background: #172554;
+}
+
+/********** Nav **********/
+.navigation {
+  background: var(--brand);
+  box-shadow: var(--shadow-soft);
+}
+
+.nav-list {
+  display: flex;
+  gap: .5rem;
+  padding: .75rem 0;
+  margin: 0;
+  list-style: none;
+  overflow: auto;
+}
+
+.nav-list a {
+  display: inline-block;
+  padding: .55rem 1rem;
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-list a:hover, .nav-list a:focus {
+  background: #0f172a;
+}
+
+.nav-list a.active {
+  background: #0f172a;
+  font-weight: 600;
+}
+
+/********** Header **********/
+#top-header {
+  display: flex;
+  background: #fff;
+  padding: .75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e7eb;
+  max-width: var(--container);
+  margin-inline: auto;
+}
+
+#top-header .siteName a {
+  font-size: x-large;
+  font-weight: 800;
+  color: #111827;
+  text-decoration: none;
+}
+
+#top-header .siteName a:hover,
+#top-header .siteName a:focus {
+  color: #0e7490;
+}
+
+#top-header #tools a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #4b5563;
+  text-decoration: none;
+}
+
+#top-header #tools a:hover,
+#top-header #tools a:focus {
+  color: #0e7490;
+  text-decoration: underline;
+}
+
+
+/********** Section Two **********/
+.grid-sections {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.reviews h2,
+.upgrades h2 {
+  margin: .75rem 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.review-list {
+  padding-left: 1.25rem;
+}
+
+.upgrade-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+}
+
+.upgrade-grid li {
+  display: grid;
+  gap: .25rem;
+}
+
+.upgrade-title {
+  display: grid;
+  place-items: center;
+  background: #0ea5b7;
+  border-radius: .75rem;
+  aspect-ratio: 1 / 1;
+  box-shadow: var(--shadow-soft);
+}
+
+.upgrade-title img {
+  width: 50%;
+  height: auto;
+}
+
+.upgrade-link {
+  color: var(--accent-strong);
+  text-decoration: none;
+  font-weight: 400;
+  justify-self: center;
+}
+
+
+/* ========= Footer ========= */
+.site-footer {
+  margin-top: 2rem;
+  padding: 1rem 0 2rem;
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+
+/* ========= Media Queries ========= */
+@media (min-width: 900px) {
+  .page-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-overlay {
+    left: 2rem;
+    top: 2rem;
+    padding: 1.25rem 1.5rem;
+    max-width: min(80%, 400px);
+  }
+
+  .grid-sections {
+    grid-template-columns: 1.1fr 1fr;
+    align-items: start;
+  }
+
+  .reviews {
+    order: 2;
+  }
+
+  .upgrades {
+    order: 1;
+  }
+
+  .upgrade-grid {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  #top-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  #top-header #tools {
+    align-self: flex-end;
+  }
 }
