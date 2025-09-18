@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-label="Vehicle image placeholder">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8eef7"/>
+      <stop offset="100%" stop-color="#cfd9e8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <g fill="none" stroke="#7a8aa0" stroke-width="4">
+    <rect x="80" y="140" width="640" height="180" rx="16"/>
+    <circle cx="200" cy="340" r="36"/>
+    <circle cx="600" cy="340" r="36"/>
+  </g>
+  <g fill="#54627a" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="400" y="90" font-size="28">Image Unavailable</text>
+    <text x="400" y="120" font-size="16">Vehicle photo will appear here</text>
+  </g>
+</svg>
