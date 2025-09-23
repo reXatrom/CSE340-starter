@@ -1,0 +1,25 @@
+<section class="auth-center">
+<h1 class="page-title"><%= title %></h1>
+
+<%- messages() %>
+
+<section class="auth-card">
+  <form class="auth-form" method="post" action="/account/login">
+    <div class="form-row">
+      <label for="account_email">Email</label>
+      <input id="account_email" name="account_email" type="email" autocomplete="username" placeholder="you@example.com">
+    </div>
+
+    <div class="form-row">
+      <label for="account_password">Password</label>
+      <input id="account_password" name="account_password" type="password" autocomplete="current-password" placeholder="Your password">
+    </div>
+
+    <div class="form-actions">
+      <button class="btn" type="submit">Login</button>
+    </div>
+  </form>
+
+  <p class="auth-alt">No account? <a href="/account/register">Sign-up</a></p>
+</section>
+</section>
