@@ -3,16 +3,25 @@
 
 <%- messages() %>
 
+<% if (errors) { %>
+  <ul class="notice">
+  <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+  <% }) %>
+  </ul>
+<% } %>
+
 <section class="auth-card">
   <form class="auth-form" method="post" action="/account/login">
     <div class="form-row">
       <label for="account_email">Email</label>
-      <input id="account_email" name="account_email" type="email" autocomplete="username" placeholder="you@example.com">
+      <input id="account_email" name="account_email" type="email" autocomplete="username" placeholder="you@example.com" required value="<%= locals.account_email %>">
     </div>
 
     <div class="form-row">
       <label for="account_password">Password</label>
-      <input id="account_password" name="account_password" type="password" autocomplete="current-password" placeholder="Your password">
+      <div class="password-requirements">Passwords must be at least 12 characters and contain at least 1 number, 1 lowercase, 1 capital letter, and 1 special character.</div>
+      <input id="account_password" name="account_password" type="password" autocomplete="current-password" placeholder="Your password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" title="At least 12 characters, with 1 number, 1 lowercase, 1 uppercase, and 1 special character; no spaces.">
     </div>
 
     <div class="form-actions">

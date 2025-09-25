@@ -342,3 +342,13 @@ img {
 .auth-alt a:focus {
   text-decoration: underline;
 }
+
+/* Password requirements helper */
+.password-requirements {
+  font-size: 0.9rem;
+  background: #f5f7ff;
+  border-left: 4px solid #4f46e5;
+  padding: 0.5rem 0.75rem;
+  margin: 0.25rem 0 0.5rem;
+  color: var(--ink);
+}
