@@ -6,34 +6,34 @@ const utilities = require("../utilities/")
 const invValidate = require("../utilities/inventory-validation")
 
 // Route to build inventory management view (Task 1)
-router.get("/", utilities.handleErrors(invController.buildManagement))
+router.get("/", utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.buildManagement))
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
+// Route to get inventory by classification as JSON
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
+
 // Route to build inventory detail view (Week 3)
 router.get('/detail/:invId', utilities.handleErrors(invController.buildDetailView));
 
-// Deliver Add Classification view
-router.get('/add-classification', utilities.handleErrors(invController.buildAddClassification))
+// Route to deliver edit inventory view
+router.get('/edit/:inv_id', utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.buildEditInventory));
 
-// Process Add Classification
+// Route to deliver delete confirmation view
+router.get('/delete/:inv_id', utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.buildDeleteInventory));
+
+// Process Update Inventory
 router.post(
-  '/add-classification',
-  invValidate.classificationRules(),
-  invValidate.checkClassData,
-  utilities.handleErrors(invController.addClassification)
-)
-
-// Deliver Add Inventory view
-router.get('/add-inventory', utilities.handleErrors(invController.buildAddInventory))
-
-// Process Add Inventory
-router.post(
-  '/add-inventory',
+  '/update',
+  utilities.checkJWTToken,
+  utilities.checkAccountType,
   invValidate.inventoryRules(),
-  invValidate.checkInvData,
-  utilities.handleErrors(invController.addInventory)
+  invValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
 )
+
+// Process Delete Inventory
+router.post('/delete/:inv_id', utilities.checkJWTToken, utilities.checkAccountType, utilities.handleErrors(invController.deleteInventory))
 
 module.exports = router;

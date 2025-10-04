@@ -1,0 +1,48 @@
+<section class="container">
+  <h1 class="page-title"><%= title %></h1>
+
+  <%- messages() %>
+
+  <% if (errors) { %>
+    <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+    </ul>
+  <% } %>
+
+  <section class="auth-card edit-inventory-card">
+    <div class="form-header">
+      <h2>Confirm Vehicle Deletion</h2>
+      <p>Confirm Deletion - The delete is permanent and cannot be undone.</p>
+    </div>
+
+    <form class="auth-form" method="post" action="/inv/delete/<%= inv_id %>">
+      <input type="hidden" name="inv_id" value="<%= inv_id %>">
+
+      <div class="form-row">
+        <label for="inv_make">Make</label>
+        <input id="inv_make" name="inv_make" type="text" readonly value="<%= inv_make %>">
+      </div>
+
+      <div class="form-row">
+        <label for="inv_model">Model</label>
+        <input id="inv_model" name="inv_model" type="text" readonly value="<%= inv_model %>">
+      </div>
+
+      <div class="form-row">
+        <label for="inv_year">Year</label>
+        <input id="inv_year" name="inv_year" type="number" readonly value="<%= inv_year %>">
+      </div>
+
+      <div class="form-row">
+        <label for="inv_price">Price</label>
+        <input id="inv_price" name="inv_price" type="number" step="0.01" readonly value="<%= inv_price %>">
+      </div>
+
+      <div class="form-actions">
+        <button class="btn" type="submit">Delete Vehicle</button>
+      </div>
+    </form>
+  </section>
+</section>

@@ -1,9 +1,17 @@
 -- 1. Create the type 'account_type' first
+-- CREATE TYPE public.account_type AS ENUM
+--     ('Client', 'Employee', 'Admin');
+
+-- ALTER TYPE public.account_type
+--     OWNER TO cse340;
+
+DROP TYPE IF EXISTS public.account_type CASCADE;
+
 CREATE TYPE public.account_type AS ENUM
     ('Client', 'Employee', 'Admin');
 
 ALTER TYPE public.account_type
-    OWNER TO cse340;
+    OWNER TO cse340hjs;
 
 
 
@@ -258,3 +266,11 @@ VALUES   (
     'White',
     5
   );
+
+
+-- 8. Update account types
+UPDATE account SET account_type = 'Employee' WHERE account_email = 'happy@340.edu';
+UPDATE account SET account_type = 'Admin'    WHERE account_email = 'manager@340.edu';
+-- verify the changes
+SELECT account_email, account_type FROM account
+WHERE account_email IN ('happy@340.edu','manager@340.edu');

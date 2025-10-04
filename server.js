@@ -17,6 +17,7 @@ const utilities = require("./utilities/")
 const errorRoute = require("./routes/errorRoute")
 const session = require("express-session")
 const pool = require("./database/")
+const cookieParser = require("cookie-parser")
 
 
 /* ***********************
@@ -44,6 +45,12 @@ app.use(function(req, res, next){
 // Body Parsers
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+// Cookie Parser
+app.use(cookieParser())
+
+// JWT check middleware (sets res.locals.accountData and res.locals.loggedin)
+app.use(utilities.checkJWTToken)
 
 
 /* ***********************

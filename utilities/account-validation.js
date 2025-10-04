@@ -122,4 +122,67 @@ validate.checkLoginData = async (req, res, next) => {
   next()
 }
 
-module.exports = validate
+/*  **********************************
+ *  Account Update Data Validation Rules
+ * ********************************* */
+validate.accountUpdateRules = () => {
+  return [
+    // firstname is required and must be string
+    body("account_firstname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a first name."),
+
+    // lastname is required and must be string
+    body("account_lastname")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a last name."),
+
+    // valid email is required
+    body("account_email")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required.")
+      .custom(async (account_email, { req }) => {
+        const emailExists = await accountModel.checkExistingEmail(account_email)
+        if (emailExists && emailExists > 0) {
+          // Check if it's the same user's email (allow same email for same user)
+          const currentAccount = await accountModel.getAccountById(req.body.account_id)
+          if (currentAccount && currentAccount.account_email !== account_email) {
+            throw new Error("Email exists. Please use a different email")
+          }
+        }
+      }),
+  ]
+}
+
+/* ******************************
+ * Check account update data and return errors or continue
+ * ***************************** */
+validate.checkAccountUpdateData = async (req, res, next) => {
+  const { account_firstname, account_lastname, account_email } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("account/update-account", {
+      errors,
+      title: "Update Account Information",
+      nav,
+      account_id: req.body.account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+    })
+    return
+  }
+  next()
+}

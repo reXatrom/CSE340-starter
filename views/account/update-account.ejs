@@ -1,0 +1,198 @@
+<section class="auth-center">
+  <h1 class="page-title"><%= title %></h1>
+
+  <%- messages() %>
+
+  <% if (errors) { %>
+    <ul class="notice">
+    <% errors.array && errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+    </ul>
+  <% } %>
+
+  <section class="auth-card">
+    <div class="form-header">
+      <h2>Account Management</h2>
+      <p>Update your account information below.</p>
+    </div>
+
+    <!-- Account Information Update Form -->
+    <form class="auth-form" method="post" action="/account/update" id="accountUpdateForm">
+      <input type="hidden" name="account_id" value="<%= account_id %>">
+
+      <div class="form-section">
+        <h3>Account Information</h3>
+
+        <div class="form-row">
+          <label for="account_firstname">First Name</label>
+          <input id="account_firstname" name="account_firstname" type="text" required value="<%= account_firstname %>" oninput="validateAccountForm()">
+          <span class="error-message" id="firstname-error"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="account_lastname">Last Name</label>
+          <input id="account_lastname" name="account_lastname" type="text" required value="<%= account_lastname %>" oninput="validateAccountForm()">
+          <span class="error-message" id="lastname-error"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="account_email">Email Address</label>
+          <input id="account_email" name="account_email" type="email" required value="<%= account_email %>" oninput="validateAccountForm()">
+          <span class="error-message" id="email-error"></span>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn" type="submit" id="updateAccountBtn" disabled>Update Account Information</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Password Change Form -->
+    <form class="auth-form" method="post" action="/account/change-password" id="passwordChangeForm">
+      <input type="hidden" name="account_id" value="<%= account_id %>">
+
+      <div class="form-section">
+        <h3>Change Password</h3>
+        <p class="form-info">Enter your current password and choose a new password. Your new password must be at least 12 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.</p>
+
+        <div class="form-row">
+          <label for="current_password">Current Password</label>
+          <input id="current_password" name="current_password" type="password" required>
+          <span class="error-message" id="current-password-error"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="new_password">New Password</label>
+          <input id="new_password" name="new_password" type="password" required minlength="12" oninput="validatePasswordForm()">
+          <span class="error-message" id="new-password-error"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="confirm_password">Confirm New Password</label>
+          <input id="confirm_password" name="confirm_password" type="password" required minlength="12" oninput="validatePasswordForm()">
+          <span class="error-message" id="confirm-password-error"></span>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn" type="submit" id="changePasswordBtn" disabled>Change Password</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="form-actions">
+      <a href="/account/" class="btn muted">Back to Account Management</a>
+    </div>
+  </section>
+</section>
+
+<script>
+  function validateAccountForm() {
+    const firstname = document.getElementById('account_firstname').value.trim();
+    const lastname = document.getElementById('account_lastname').value.trim();
+    const email = document.getElementById('account_email').value.trim();
+    const submitBtn = document.getElementById('updateAccountBtn');
+
+    // Clear previous error messages
+    document.getElementById('firstname-error').textContent = '';
+    document.getElementById('lastname-error').textContent = '';
+    document.getElementById('email-error').textContent = '';
+
+    let isValid = true;
+
+    // Validate first name
+    if (firstname === '') {
+      document.getElementById('firstname-error').textContent = 'First name is required.';
+      isValid = false;
+    } else if (firstname.length < 1) {
+      document.getElementById('firstname-error').textContent = 'First name must be at least 1 character.';
+      isValid = false;
+    }
+
+    // Validate last name
+    if (lastname === '') {
+      document.getElementById('lastname-error').textContent = 'Last name is required.';
+      isValid = false;
+    } else if (lastname.length < 2) {
+      document.getElementById('lastname-error').textContent = 'Last name must be at least 2 characters.';
+      isValid = false;
+    }
+
+    // Validate email
+    if (email === '') {
+      document.getElementById('email-error').textContent = 'Email address is required.';
+      isValid = false;
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        document.getElementById('email-error').textContent = 'Please enter a valid email address.';
+        isValid = false;
+      }
+    }
+
+    // Enable/disable submit button
+    submitBtn.disabled = !isValid;
+
+    return isValid;
+  }
+
+  function validatePasswordForm() {
+    const currentPassword = document.getElementById('current_password').value;
+    const newPassword = document.getElementById('new_password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    const submitBtn = document.getElementById('changePasswordBtn');
+
+    // Clear previous error messages
+    document.getElementById('current-password-error').textContent = '';
+    document.getElementById('new-password-error').textContent = '';
+    document.getElementById('confirm-password-error').textContent = '';
+
+    let isValid = true;
+
+    // Validate current password
+    if (currentPassword === '') {
+      document.getElementById('current-password-error').textContent = 'Current password is required.';
+      isValid = false;
+    }
+
+    // Validate new password
+    if (newPassword === '') {
+      document.getElementById('new-password-error').textContent = 'New password is required.';
+      isValid = false;
+    } else if (newPassword.length < 12) {
+      document.getElementById('new-password-error').textContent = 'Password must be at least 12 characters long.';
+      isValid = false;
+    } else {
+      // Check for required character types
+      const hasUppercase = /[A-Z]/.test(newPassword);
+      const hasLowercase = /[a-z]/.test(newPassword);
+      const hasNumbers = /\d/.test(newPassword);
+      const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(newPassword);
+
+      if (!hasUppercase || !hasLowercase || !hasNumbers || !hasSpecial) {
+        document.getElementById('new-password-error').textContent = 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.';
+        isValid = false;
+      }
+    }
+
+    // Validate confirm password
+    if (confirmPassword === '') {
+      document.getElementById('confirm-password-error').textContent = 'Please confirm your new password.';
+      isValid = false;
+    } else if (newPassword !== confirmPassword) {
+      document.getElementById('confirm-password-error').textContent = 'Passwords do not match.';
+      isValid = false;
+    }
+
+    // Enable/disable submit button
+    submitBtn.disabled = !isValid;
+
+    return isValid;
+  }
+
+  // Validate forms on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    validateAccountForm();
+    validatePasswordForm();
+  });
+</script>
