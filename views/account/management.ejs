@@ -16,11 +16,15 @@
       <h2>Welcome <%= accountData.account_firstname %></h2>
 
       <% if (accountData.account_type === 'Client') { %>
-        <!-- Client-specific content -->
+        <section class="account-management-links">
+          <a href="/account/update/<%= accountData.account_id %>" class="account-link" title="Update your account information">Update Account Information</a>
+          <a href="/reviews/user-reviews" class="btn" title="View and manage your reviews" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);">My Reviews</a>
+        </section>
       <% } else if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
         <section class="account-management-links">
           <a href="/inv/" class="inventory-link" title="Manage inventory">Access Inventory Management</a>
           <a href="/account/update/<%= accountData.account_id %>" class="account-link" title="Update your account information">Update Account Information</a>
+          <a href="/reviews/user-reviews" class="btn" title="View and manage your reviews" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); grid-column: 1 / -1; margin-top: 1rem;">My Reviews</a>
         </section>
       <% } %>
     <% } else { %>

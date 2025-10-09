@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const reviewsModel = require("../models/reviews-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -148,6 +149,16 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const data = await invModel.getInventoryByClassificationId(classification_id)
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
+
+  // Handle case where no vehicles exist in this classification
+  if (!data || data.length === 0) {
+    return res.render("./inventory/classification", {
+      title: "No vehicles found",
+      nav,
+      grid: "<p class='notice'>No vehicles found in this category.</p>",
+    })
+  }
+
   const className = data[0].classification_name
   res.render("./inventory/classification", {
     title: className + " vehicles",
@@ -293,6 +304,7 @@ invCont.buildDeleteInventory = async function (req, res, next) {
     inv_price: itemData.inv_price,
   })
 }
+
 /* ***************************
  *  Delete Inventory Data
  * ************************** */
@@ -316,6 +328,7 @@ invCont.buildDetailView = async function (req, res, next) {
   const invId = req.params.invId;
   const vehicle = await invModel.getVehicleById(invId);
   let nav = await utilities.getNav();
+
   if (!vehicle) {
     return res.status(404).render("./inventory/detail", {
       title: "Vehicle Not Found",
@@ -323,14 +336,23 @@ invCont.buildDetailView = async function (req, res, next) {
       html: "<p>Vehicle not found.</p>"
     });
   }
+
+  // Get reviews data for this vehicle
+  const reviews = await reviewsModel.getReviewsByVehicleId(invId);
+  const averageRating = await reviewsModel.getAverageRating(invId);
+
   const html = utilities.buildDetailView(vehicle);
   const title = `${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}`;
+
   res.render("inventory/detail", {
     title,
     nav,
-    html
+    html,
+    reviews,
+    averageRating,
+    inv_id: invId,
+    account_id: res.locals.accountData ? res.locals.accountData.account_id : null
   });
 };
-
 
 module.exports = invCont

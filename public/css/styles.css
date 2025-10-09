@@ -388,6 +388,277 @@ img {
   }
 }
 
+/* ========= Reviews System ========= */
+.vehicle-reviews {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.vehicle-reviews h2 {
+  margin: 0 0 1.5rem;
+  color: var(--brand);
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.average-rating {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 0.75rem;
+  border: 1px solid #cbd5e1;
+}
+
+.rating-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stars {
+  display: flex;
+  gap: 0.125rem;
+}
+
+.star {
+  font-size: 1.25rem;
+  color: #d1d5db;
+  transition: color 0.2s ease;
+}
+
+.star.filled {
+  color: #fbbf24;
+}
+
+.avg-rating-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+.review-count {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.reviews-list {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.review-item {
+  padding: 1.25rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.reviewer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.reviewer-name {
+  font-weight: 600;
+  color: var(--brand);
+}
+
+.review-date {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.review-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.rating-text {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.review-text {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.review-actions {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.review-actions .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* Review Forms */
+.add-review-form,
+.edit-review-form {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.review-form {
+  background: #fff;
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid #e5e7eb;
+}
+
+.review-form .form-row {
+  margin-bottom: 1.5rem;
+}
+
+.review-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+.rating-input {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.rating-input input[type="radio"] {
+  display: none;
+}
+
+.rating-input label {
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s ease;
+  font-size: 1.5rem;
+}
+
+.rating-input label:hover {
+  background-color: #f3f4f6;
+}
+
+.rating-input input[type="radio"]:checked + label {
+  background-color: #fef3c7;
+}
+
+.review-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.2s ease;
+}
+
+.review-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(14, 165, 183, 0.1);
+}
+
+.form-hint {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* User Reviews Page */
+.user-reviews {
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.reviews-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.review-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.review-card .review-header {
+  margin-bottom: 1rem;
+}
+
+.review-card .vehicle-info h3 {
+  margin: 0 0 0.5rem;
+  color: var(--brand);
+  font-size: 1.25rem;
+}
+
+.review-card .review-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.no-reviews {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.no-reviews p {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+@media (min-width: 768px) {
+  .review-header {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .rating-input {
+    flex-direction: row;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ========= Inventory Management ========= */
 .inventory-classification-section {
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
