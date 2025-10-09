@@ -25,6 +25,32 @@ async function checkExistingEmail(account_email){
   }
 }
 
+/* **********************
+ *   Get account by email
+ * ********************* */
+async function getAccountByEmail(account_email) {
+  try {
+    const sql = "SELECT * FROM account WHERE account_email = $1"
+    const account = await pool.query(sql, [account_email])
+    return account.rows[0] // Return the first (and should be only) account found
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* **********************
+ *   Get account by ID
+ * ********************* */
+async function getAccountById(account_id) {
+  try {
+    const sql = "SELECT * FROM account WHERE account_id = $1"
+    const account = await pool.query(sql, [account_id])
+    return account.rows[0] // Return the first (and should be only) account found
+  } catch (error) {
+    return error.message
+  }
+}
+
 /* *****************************
 *   Update account information
 * *************************** */

@@ -186,3 +186,5 @@ validate.checkAccountUpdateData = async (req, res, next) => {
   }
   next()
 }
+
+module.exports = validate
