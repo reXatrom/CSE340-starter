@@ -18,11 +18,11 @@
       <% if (accountData.account_type === 'Client') { %>
         <!-- Client-specific content -->
       <% } else if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
-        <h3>Inventory Management</h3>
-        <p><a href="/inv/" title="Manage inventory">Access Inventory Management</a></p>
+        <section class="account-management-links">
+          <a href="/inv/" class="inventory-link" title="Manage inventory">Access Inventory Management</a>
+          <a href="/account/update/<%= accountData.account_id %>" class="account-link" title="Update your account information">Update Account Information</a>
+        </section>
       <% } %>
-
-      <p><a href="/account/update/<%= accountData.account_id %>" title="Update your account information">Update Account Information</a></p>
     <% } else { %>
       <p>You're logged in.</p>
     <% } %>

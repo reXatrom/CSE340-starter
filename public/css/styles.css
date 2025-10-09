@@ -338,6 +338,56 @@ img {
   font-weight: 600;
 }
 
+/* ========= Account Management Links ========= */
+.account-management-links {
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.account-management-links a {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  border-radius: .75rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  transition: all .2s ease;
+  border: 2px solid transparent;
+}
+
+.account-management-links a:hover,
+.account-management-links a:focus {
+  background: var(--accent-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: var(--accent-strong);
+}
+
+.account-management-links a:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.account-management-links .inventory-link {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+}
+
+.account-management-links .account-link {
+  background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+}
+
+@media (min-width: 640px) {
+  .account-management-links {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
 /* ========= Inventory Management ========= */
 .inventory-classification-section {
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
