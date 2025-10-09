@@ -1,15 +1,16 @@
+// utilities/account-validation.js
+
 const utilities = require(".")
 const accountModel = require("../models/account-model")
 const { body, validationResult } = require("express-validator")
 
 const validate = {}
 
-/*  **********************************
- *  Registration Data Validation Rules
+/* **********************************
+ * Registration Data Validation Rules
  * ********************************* */
 validate.registrationRules = () => {
   return [
-    // firstname is required and must be string
     body("account_firstname")
       .trim()
       .escape()
@@ -17,7 +18,6 @@ validate.registrationRules = () => {
       .isLength({ min: 1 })
       .withMessage("Please provide a first name."),
 
-    // lastname is required and must be string
     body("account_lastname")
       .trim()
       .escape()
@@ -25,22 +25,20 @@ validate.registrationRules = () => {
       .isLength({ min: 2 })
       .withMessage("Please provide a last name."),
 
-    // valid email is required and cannot already exist in the database
     body("account_email")
       .trim()
       .escape()
       .notEmpty()
       .isEmail()
-      .normalizeEmail() // refer to validator.js docs
+      .normalizeEmail()
       .withMessage("A valid email is required.")
       .custom(async (account_email) => {
         const emailExists = await accountModel.checkExistingEmail(account_email)
         if (emailExists) {
-          throw new Error("Email exists. Please log in or use different email")
+          throw new Error("Email exists. Please log in or use a different email")
         }
       }),
 
-    // password is required and must be strong password
     body("account_password")
       .trim()
       .notEmpty()
@@ -55,18 +53,17 @@ validate.registrationRules = () => {
   ]
 }
 
-// Alias to accommodate course spelling in examples
+// Alias for course example spelling
 validate.registationRules = validate.registrationRules
 
 /* ******************************
- * Check data and return errors or continue to registration
+ * Check registration data
  * ***************************** */
 validate.checkRegData = async (req, res, next) => {
   const { account_firstname, account_lastname, account_email } = req.body
-  let errors = []
-  errors = validationResult(req)
+  const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
+    const nav = await utilities.getNav()
     res.render("account/register", {
       errors,
       title: "Registration",
@@ -80,12 +77,11 @@ validate.checkRegData = async (req, res, next) => {
   next()
 }
 
-/*  **********************************
- *  Login Data Validation Rules
+/* **********************************
+ * Login Data Validation Rules
  * ********************************* */
 validate.loginRules = () => {
   return [
-    // valid email is required
     body("account_email")
       .trim()
       .escape()
@@ -94,7 +90,6 @@ validate.loginRules = () => {
       .normalizeEmail()
       .withMessage("A valid email is required."),
 
-    // password is required
     body("account_password")
       .trim()
       .notEmpty()
@@ -103,14 +98,13 @@ validate.loginRules = () => {
 }
 
 /* ******************************
- * Check login data and return errors or continue
+ * Check login data
  * ***************************** */
 validate.checkLoginData = async (req, res, next) => {
   const { account_email } = req.body
-  let errors = []
-  errors = validationResult(req)
+  const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
+    const nav = await utilities.getNav()
     res.render("account/login", {
       errors,
       title: "Login",
@@ -122,12 +116,11 @@ validate.checkLoginData = async (req, res, next) => {
   next()
 }
 
-/*  **********************************
- *  Account Update Data Validation Rules
+/* **********************************
+ * Account Update Data Validation Rules
  * ********************************* */
 validate.accountUpdateRules = () => {
   return [
-    // firstname is required and must be string
     body("account_firstname")
       .trim()
       .escape()
@@ -135,7 +128,6 @@ validate.accountUpdateRules = () => {
       .isLength({ min: 1 })
       .withMessage("Please provide a first name."),
 
-    // lastname is required and must be string
     body("account_lastname")
       .trim()
       .escape()
@@ -143,7 +135,6 @@ validate.accountUpdateRules = () => {
       .isLength({ min: 2 })
       .withMessage("Please provide a last name."),
 
-    // valid email is required
     body("account_email")
       .trim()
       .escape()
@@ -154,7 +145,6 @@ validate.accountUpdateRules = () => {
       .custom(async (account_email, { req }) => {
         const emailExists = await accountModel.checkExistingEmail(account_email)
         if (emailExists && emailExists > 0) {
-          // Check if it's the same user's email (allow same email for same user)
           const currentAccount = await accountModel.getAccountById(req.body.account_id)
           if (currentAccount && currentAccount.account_email !== account_email) {
             throw new Error("Email exists. Please use a different email")
@@ -165,14 +155,13 @@ validate.accountUpdateRules = () => {
 }
 
 /* ******************************
- * Check account update data and return errors or continue
+ * Check account update data
  * ***************************** */
 validate.checkAccountUpdateData = async (req, res, next) => {
   const { account_firstname, account_lastname, account_email } = req.body
-  let errors = []
-  errors = validationResult(req)
+  const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
+    const nav = await utilities.getNav()
     res.render("account/update-account", {
       errors,
       title: "Update Account Information",
@@ -187,4 +176,5 @@ validate.checkAccountUpdateData = async (req, res, next) => {
   next()
 }
 
+// ✅ Export all validation functions
 module.exports = validate
